@@ -1,0 +1,12 @@
+---
+import Ouroboros from './Ouroboros.astro';
+---
+<div class="glyph-divider" role="presentation">
+  <span class="ln"></span>
+  <Ouroboros variant="mark" size={20} color="var(--ochre)" />
+  <span class="ln"></span>
+</div>
+<style>
+  .glyph-divider { display: flex; align-items: center; gap: 14px; margin: 2.2rem 0; }
+  .glyph-divider .ln { flex: 1; height: 1px; background: var(--rule); }
+</style>

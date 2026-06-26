@@ -1,0 +1,28 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CategoryTag from '../../components/CategoryTag.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('writing');
+  return entries.map((entry) => ({ params: { id: entry.id }, props: { entry } }));
+}
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const dateFmt = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+---
+<BaseLayout title={`${entry.data.title} — Jeffrey Boruszak`} description={entry.data.description}>
+  <article>
+    <div class="entry-meta">
+      <CategoryTag category={entry.data.category} />
+      <time datetime={entry.data.pubDate.toISOString()}>{dateFmt.format(entry.data.pubDate)}</time>
+    </div>
+    <h1>{entry.data.title}</h1>
+    <div class="prose"><Content /></div>
+  </article>
+  <style>
+    .entry-meta { display: flex; align-items: center; gap: 0.7rem; margin-bottom: 0.5rem; }
+    .entry-meta time { font-family: var(--sans); font-size: 0.8rem; color: var(--muted); }
+    article h1 { margin-bottom: 1.5rem; }
+  </style>
+</BaseLayout>

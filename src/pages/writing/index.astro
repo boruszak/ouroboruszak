@@ -1,0 +1,44 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CategoryTag from '../../components/CategoryTag.astro';
+import { getCollection } from 'astro:content';
+import { WRITING_CATEGORIES } from '../../content.config';
+
+const all = (await getCollection('writing', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+const byCategory = WRITING_CATEGORIES.map((category) => ({
+  category,
+  entries: all.filter((e) => e.data.category === category),
+}));
+---
+<BaseLayout title="Writing — Jeffrey Boruszak" description="Poetry, reviews, and Star Trek criticism.">
+  <h1>Published Writing</h1>
+  {
+    byCategory.map(({ category, entries }) => (
+      <section class="cat">
+        <div class="cat-head">
+          <h2>{category}</h2>
+          <CategoryTag category={category} />
+        </div>
+        {entries.length === 0 ? (
+          <p class="empty">No entries yet.</p>
+        ) : (
+          <ul class="entry-list">
+            {entries.map((entry) => (
+              <li class="entry-row">
+                <a class="title" href={`/writing/${entry.id}`}>{entry.data.title}</a>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
+    ))
+  }
+  <style>
+    .cat { margin: 2rem 0; }
+    .cat-head { display: flex; align-items: baseline; gap: 0.7rem; margin-bottom: 0.5rem; }
+    .cat-head h2 { margin: 0; }
+    .empty { color: var(--muted); }
+  </style>
+</BaseLayout>

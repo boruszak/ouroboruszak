@@ -1,0 +1,21 @@
+---
+interface Props { category: string; }
+const { category } = Astro.props;
+const palette: Record<string, { bg: string; fg: string }> = {
+  'Poetry': { bg: '#E7EDE5', fg: '#2C4A36' },
+  'Reviews': { bg: '#F2E0D8', fg: '#7C3420' },
+  'Star Trek': { bg: '#F2E8CC', fg: '#7A5C12' },
+};
+const s = palette[category] ?? { bg: '#ECE6DA', fg: '#4A4438' };
+---
+<span class="tag" style={`background:${s.bg};color:${s.fg}`}>{category}</span>
+<style>
+  .tag {
+    font-family: var(--sans);
+    font-size: 0.72rem;
+    padding: 0.12rem 0.6rem;
+    border-radius: 20px;
+    white-space: nowrap;
+    display: inline-block;
+  }
+</style>

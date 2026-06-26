@@ -1,0 +1,86 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Ouroboros from '../components/Ouroboros.astro';
+import CategoryTag from '../components/CategoryTag.astro';
+import SectionGlyph from '../components/SectionGlyph.astro';
+import { getCollection } from 'astro:content';
+import { getRecentPosts, SUBSTACK_URL } from '../lib/substack';
+
+const writing = (await getCollection('writing', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+
+const posts = await getRecentPosts(3);
+
+const dateFmt = new Intl.DateTimeFormat('en-US', {
+  year: 'numeric', month: 'long', day: 'numeric',
+});
+---
+
+<BaseLayout
+  title="Jeffrey Boruszak"
+  description="Poet, writer, and editor. Creative technology meets cultural criticism."
+>
+  <section class="center">
+    <div class="hero-text">
+      <h1>Jeffrey Boruszak</h1>
+      <p class="spine">
+        Writer. Editor. Lover of words in all their forms and assemblages.
+      </p>
+    </div>
+  </section>
+
+  <SectionGlyph />
+
+  <section>
+    <h2>From ouroboruszak (dot) substack</h2>
+    {
+      posts.length === 0 ? (
+        <p>Latest essays and notes live on <a href={SUBSTACK_URL}>Substack</a>.</p>
+      ) : (
+        <ul class="entry-list">
+          {posts.map((post) => (
+            <li class="entry-row">
+              <a class="title" href={post.link}>{post.title}</a>
+              {post.pubDate && <span class="date">{dateFmt.format(post.pubDate)}</span>}
+            </li>
+          ))}
+        </ul>
+      )
+    }
+    <a class="more" href={SUBSTACK_URL}>Read on Substack &rarr;</a>
+  </section>
+
+<SectionGlyph />
+
+  <section>
+    <h2>Published work</h2>
+    {
+      writing.length === 0 ? (
+        <p>No entries yet.</p>
+      ) : (
+        <ul class="entry-list">
+          {writing.map((entry) => (
+            <li class="entry-row">
+              <a class="title" href={`/writing/${entry.id}`}>{entry.data.title}</a>
+              <CategoryTag category={entry.data.category} />
+            </li>
+          ))}
+        </ul>
+      )
+    }
+    <a class="more" href="/writing">All writing &rarr;</a>
+  </section>
+
+
+
+  <style>
+    .hero { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; padding: 1.5rem 0 0.5rem; }
+    .hero-text { flex: 1; }
+    .hero .spine { font-size: 1.2rem; line-height: 1.45; color: var(--ink-soft); margin: 0.6rem 0 0; max-width: 30ch; }
+    .hero-mark { flex-shrink: 0; }
+    @media (max-width: 34rem) {
+      .hero { flex-direction: column-reverse; align-items: flex-start; }
+    }
+  </style>
+</BaseLayout>

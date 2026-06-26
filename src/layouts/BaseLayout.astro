@@ -1,0 +1,79 @@
+---
+import '../styles/global.css';
+import Ouroboros from '../components/Ouroboros.astro';
+import SectionGlyph from '../components/SectionGlyph.astro';
+
+interface Props { 
+  title: string; 
+  description?: string; 
+  width?: 'default' | 'wide'; 
+}
+
+const { title, description, width = 'default' } = Astro.props;
+// then: <main class={width === 'wide' ? 'wide' : undefined}>
+
+const nav = [
+  { href: '/', label: 'Home' },
+  { href: '/about', label: 'About' },
+  { href: '/writing', label: 'Writing' },
+  { href: '/lab', label: 'Lab' },
+  { href: '/links', label: 'Links' }, 
+  { href: '/contact', label: 'Contact' },
+];
+
+const currentPath = Astro.url.pathname;
+const isActive = (href: string) =>
+  href === '/' ? currentPath === '/' : currentPath.startsWith(href);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <title>{title}</title>
+    {description && <meta name="description" content={description} />}
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-B6Z7H2KY9B"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-B6Z7H2KY9B');
+    </script>
+  </head>
+  <body>
+    <header class="site-header container">
+      <a class="wordmark" href="/">
+        <Ouroboros variant="mark" size={24} color="var(--forest)" />
+        <span>ouroboruszak</span>
+      </a>
+      <nav>
+        <ul>
+          {
+            nav.map((item) => (
+              <li>
+                <a href={item.href} aria-current={isActive(item.href) ? 'page' : undefined}>
+                  {item.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="site-footer container">
+      <p class="ft-left">
+        <Ouroboros variant="mark" size={16} color="var(--muted)" />
+        <span>&copy; {new Date().getFullYear()} Jeffrey Boruszak</span>
+      </p>
+      <p><a href="/privacy">Privacy</a></p>
+    </footer>
+  </body>
+</html>
