@@ -1,9 +1,7 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
+import { WRITING_CATEGORIES } from './lib/categories';
 
-// The three Writing categories settled in Phase 0. Add to this list later
-// if the taxonomy grows; the enum keeps frontmatter honest at build time.
-export const WRITING_CATEGORIES = ['Poetry', 'Reviews', 'Star Trek'] as const;
 
 const writing = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/writing' }),

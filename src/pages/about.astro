@@ -1,27 +1,39 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { Image } from 'astro:assets';
-import portrait from 'public/images/jeff.jpg';
 ---
 <BaseLayout title="About — Jeffrey Boruszak" description="About Jeffrey Boruszak." width="wide">
-                  <h1 class="center">About</h1>
-                           <img src="public/images/jeff.jpg" alt="Jeffrey Boruszak" class="portrait"
-           widths={[260, 520]} sizes="400px" />
-        
-        <p class="bio">Jeffrey Boruszak is a professional writer and editor living in California.</p>
-
-            <p>His career as a poet began at the University of Pennsylvania, where he received his Bachelor's Degree in English and was selected as the 2010 recipient of The Kelly Writers House's Bassini Writing Apprenticeship.</p>
-
-            <p>Jeffrey continued his academic pursuits at the University of Texas at Austin, earning his Masters in 2014 and his PhD in English in 2018. His dissertation, titled <i>Sound Off!: Recording Voice and the Racial Politics of American Experimental Poetry</i>, explored the intersections between voice and race in postwar American poetry, focusing on poets who incorporated technologies for sound recording and reproduction in their work. His critical work has appeared in <i>Texas Borderlands Poetry Review</i> and <i>Jacket2</i>. His poetry has appeared in <i>Gasher Journal</i>.</p> 
-
-            <p>Jeffrey previously worked as an Associate Editor for PennSound and was the Assistant Director for The New Writers Project, a graduate MFA program at UT Austin. He currently works as at HashiCorp, where he manages a team of technical writers and education engineers.</p>
-              
-            <p>Jeffrey spends his free time with his wife, son, and pet dachshund. He is an active writer with a background in poetry, cultural analysis, fiction, and screenwriting. Contact for inquiries and availability.</p>
+    <div class="prose">
+      <h1>About</h1>
+      <p>Jeffrey Boruszak is a professional writer and editor living in California.</p>
+ 
+      <p>His career as a poet began at the University of Pennsylvania, where he received his Bachelor's Degree in English and was selected as the 2010 recipient of The Kelly Writers House's Bassini Writing Apprenticeship.</p>
+ 
+      <p>Jeffrey continued his academic pursuits at the University of Texas at Austin, earning his Masters in 2014 and his PhD in English in 2018. His dissertation, titled <i>Sound Off!: Recording Voice and the Racial Politics of American Experimental Poetry</i>, explored the intersections between voice and race in postwar American poetry, focusing on poets who incorporated technologies for sound recording and reproduction in their work. His critical work has appeared in <i>Texas Borderlands Poetry Review</i> and <i>Jacket2</i>. His poetry has appeared in <i>Gasher Journal</i>.</p>
+ 
+      <p>Jeffrey previously worked as an Associate Editor for PennSound and was the Assistant Director for The New Writers Project, a graduate MFA program at UT Austin. He currently works at HashiCorp, where he manages a team of technical writers and education engineers.</p>
+ 
+      <p>Jeffrey spends his free time with his wife, son, and pet dachshund. He is an active writer with a background in poetry, cultural analysis, fiction, and screenwriting. Contact for inquiries and availability.</p>
+    </div>
+    <img src="/images/jeff.jpg" alt="Jeffrey Boruszak" class="portrait" />
+  </div>
   <style>
-    .about { display: grid; grid-template-columns: 1fr 260px; gap: 2.5rem; align-items: start; }
-    .portrait { width: 50%; height: auto; border-radius: 10px; float: right;}
-    .prose {display: grid; grid-template-columns: 350px}
-    .bio {display: flex; flex-wrap: wrap;}
-    @media (max-width: 40rem) { .about { grid-template-columns: 1fr; } }
+    .about {
+      display: grid;
+      grid-template-columns: 1fr 260px;
+      gap: 2.5rem;
+      align-items: stretch;
+    }
+    .portrait {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      border-radius: 10px;
+    }
+    @media (max-width: 40rem) {
+      .about { grid-template-columns: 1fr; }
+      .portrait { height: auto; aspect-ratio: 3 / 4; }
+    }
   </style>
+
 </BaseLayout>

@@ -1,16 +1,14 @@
 ---
 import '../styles/global.css';
 import Ouroboros from '../components/Ouroboros.astro';
-
-
+ 
 interface Props { 
   title: string; 
   description?: string; 
   width?: 'default' | 'wide'; 
 }
-
+ 
 const { title, description, width = 'default' } = Astro.props;
-// then: <main class={width === 'wide' ? 'wide' : undefined}>
 
 const nav = [
   { href: '/', label: 'Home' },
