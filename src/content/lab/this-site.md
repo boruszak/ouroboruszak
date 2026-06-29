@@ -8,7 +8,7 @@ pubDate: 2026-06-29
 
 This website, ouroboruszak.com, was created using a combination of Claude and Astro Docs. 
 
-Its structure and content is defined by the following GitHub repo: <a href="https://github.com/boruszak/ouroboruszak">https://github.com/boruszak/ouroboruszak</a>.
+Its structure and content is defined by the following GitHub repo: [https://github.com/boruszak/ouroboruszak](https://github.com/boruszak/ouroboruszak).
 
 It was deployed using Cloudflare pages, which builds the static site on each commit to the GitHub repo.
 

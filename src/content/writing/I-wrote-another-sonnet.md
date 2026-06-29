@@ -5,7 +5,7 @@ pubDate: 2025-04-01
 category: "Poetry"
 ---
 
-This poem was originally published in *After: A Collection of Ekphrastic Writing and Art*, from Gasher Press.
+This poem was originally published in [*After: A Collection of Ekphrastic Writing and Art*, from Gasher Press](https://www.gasherpress.com/product-page/after-a-collection-of-ekphrastic-writing-and-art).
 <hr>
 
 <h2>I wrote another sonnet does it make you want to love me?</h2>
