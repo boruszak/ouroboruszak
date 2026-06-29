@@ -43,6 +43,8 @@ h2 { font-size: 1.35rem; color: var(--forest); }
 .container { max-width: var(--measure); margin: 0 auto; padding: 0 var(--gap); }
 main { max-width: var(--measure); margin: 0 auto; padding: 2.5rem var(--gap) 4rem; }
 
+main.wide { max-width: 56rem; }
+
 .center {
   text-align: center;
 }
