@@ -1,0 +1,8 @@
+# Old Bootstrap-site .html URLs -> new clean Astro paths (permanent 301)
+/index.html            /                          301
+/about.html            /about                     301
+/poems.html            /writing                   301
+/mesostic.html         /lab/mesostic-generator    301
+/tuvix.html            /writing/tuvix             301
+/links.html            /links                     301
+/privacypolicy.html    /privacy                   301
