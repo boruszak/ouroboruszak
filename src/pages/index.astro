@@ -5,12 +5,16 @@ import CategoryTag from '../components/CategoryTag.astro';
 import SectionGlyph from '../components/SectionGlyph.astro';
 import { getCollection } from 'astro:content';
 import { getRecentPosts, SUBSTACK_URL } from '../lib/substack';
+import { getRecentFilms, LETTERBOXD_URL } from '../lib/letterboxd';
+import StarRating from '../components/StarRating.astro';
 
 const writing = (await getCollection('writing', ({ data }) => !data.draft))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
   .slice(0, 3);
 
 const posts = await getRecentPosts(3);
+
+const films = await getRecentFilms(6);
 
 const dateFmt = new Intl.DateTimeFormat('en-US', {
   year: 'numeric', month: 'long', day: 'numeric',
@@ -51,6 +55,30 @@ const dateFmt = new Intl.DateTimeFormat('en-US', {
     <a class="more" href={SUBSTACK_URL}>Read on Substack &rarr;</a>
   </section>
 
+ <section>
+    <h2>Recently watched movies</h2>
+    {
+      films.length === 0 ? (
+        <p>My film diary lives on <a href={LETTERBOXD_URL}>Letterboxd</a>.</p>
+      ) : (
+        <ul class="watch-strip">
+          {films.map((film) => (
+            <li class="watch">
+              <a href="/watches" class="watch-link">
+                {film.poster && (
+                  <img class="watch-poster" src={film.poster} alt={`${film.title} poster`} loading="lazy" width="80" height="120" />
+                )}
+                <span class="watch-title">{film.title}</span>
+                {film.rating != null && <StarRating rating={film.rating} />}
+              </a>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+    <a class="more" href="/watches">All recent watches &rarr;</a>
+  </section>
+
 <SectionGlyph />
 
   <section>
@@ -72,15 +100,19 @@ const dateFmt = new Intl.DateTimeFormat('en-US', {
     <a class="more" href="/writing">All writing &rarr;</a>
   </section>
 
-
-
   <style>
     .hero { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; padding: 1.5rem 0 0.5rem; }
     .hero-text { flex: 1; }
     .hero .spine { font-size: 1.2rem; line-height: 1.45; color: var(--ink-soft); margin: 0.6rem 0 0; max-width: 30ch; }
     .hero-mark { flex-shrink: 0; }
-    @media (max-width: 34rem) {
+    .watch-strip { list-style: none; padding: 0; margin: 0 0 0.5rem; display: grid; grid-template-columns: repeat(6, 1fr); gap: 0.9rem; }
+    .watch-link { display: block; text-decoration: none; }
+    .watch-poster { width: 100%; height: auto; border-radius: 4px; display: block; }
+    .watch-title { display: block; font-family: var(--sans); font-size: 0.72rem; color: var(--ink); margin: 0.35rem 0 0.15rem; line-height: 1.2; }
+    .watch-link:hover .watch-title { color: var(--terra); }
+    @media (max-width: 40rem) {
       .hero { flex-direction: column-reverse; align-items: flex-start; }
+      .watch-strip { grid-template-columns: repeat(3, 1fr); }
     }
   </style>
 </BaseLayout>

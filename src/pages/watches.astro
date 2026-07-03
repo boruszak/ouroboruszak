@@ -1,0 +1,61 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import StarRating from '../components/StarRating.astro';
+import { getRecentFilms, LETTERBOXD_URL } from '../lib/letterboxd';
+
+const films = await getRecentFilms(30);
+const dateFmt = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+---
+<BaseLayout
+  title="Recent watches — Jeffrey Boruszak"
+  description="Recently watched films and my (usually brief) reviews, from Letterboxd."
+  width="wide"
+>
+  <h1>Recent watches</h1>
+  <p class="intro">Recently watched movies and my (usually brief) reviews, from <a href={LETTERBOXD_URL}>Letterboxd</a>.</p>
+  {
+    films.length === 0 ? (
+      <p>My film diary lives on <a href={LETTERBOXD_URL}>Letterboxd</a>.</p>
+    ) : (
+      <ul class="film-list">
+        {films.map((film) => (
+          <li class="film">
+            {film.poster && (
+              <img class="poster" src={film.poster} alt={`${film.title} poster`} loading="lazy" width="90" height="135" />
+            )}
+            <div class="film-body">
+              <div class="film-head">
+                <a href={film.link} class="film-title">
+                  {film.title}{film.year && <span class="yr"> ({film.year})</span>}
+                </a>
+                {film.rating != null && <StarRating rating={film.rating} />}
+              </div>
+              {film.watchedDate && (
+                <time datetime={film.watchedDate.toISOString()}>{dateFmt.format(film.watchedDate)}</time>
+              )}
+              {film.review && <div class="prose review" set:html={film.review} />}
+            </div>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+  <style>
+    .intro { color: var(--ink-soft); margin-top: 0; }
+    .film-list { list-style: none; padding: 0; margin: 2rem 0 0; }
+    .film { display: grid; grid-template-columns: 90px 1fr; gap: 1.4rem; padding: 1.6rem 0; border-bottom: 0.5px solid var(--rule-soft); }
+    .film:last-child { border-bottom: none; }
+    .poster { width: 90px; height: auto; border-radius: 4px; }
+    .film-head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+    .film-title { font-family: var(--serif); font-size: 1.25rem; color: var(--forest-deep); text-decoration: none; }
+    .film-title:hover { color: var(--terra); }
+    .film-title .yr { color: var(--muted); font-size: 1rem; }
+    .film time { display: block; font-family: var(--sans); font-size: 0.78rem; color: var(--muted); margin: 0.25rem 0 0.6rem; }
+    .review { font-size: 1rem; }
+    .review :global(p) { margin: 0 0 0.7rem; }
+    @media (max-width: 34rem) {
+      .film { grid-template-columns: 64px 1fr; gap: 1rem; }
+      .poster { width: 64px; }
+    }
+  </style>
+</BaseLayout>
