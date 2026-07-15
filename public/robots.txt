@@ -9,4 +9,4 @@ Disallow: /dev/
 User-agent: ChatGPT-User
 Disallow: /
 
-Sitemap: https://www.ouroboruszak.com/sitemap.xml
+Sitemap: https://www.ouroboruszak.com/sitemap-index.xml

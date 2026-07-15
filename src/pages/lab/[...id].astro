@@ -3,7 +3,10 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
-  const entries = await getCollection('lab');
+  // Drafts render in local dev but are never built (and thus never reachable) in production.
+  const entries = await getCollection('lab', ({ data }) =>
+    import.meta.env.PROD ? !data.draft : true
+  );
   return entries.map((entry) => ({ params: { id: entry.id }, props: { entry } }));
 }
 const { entry } = Astro.props;

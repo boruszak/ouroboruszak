@@ -4,12 +4,10 @@ description: "A tool for generating mesostic poems from a source text and a spin
 pubDate: 2025-01-01
 ---
 
-<div class="container" id="intro">
-      <div>
-        <p>This mesostic uses my dissertation as its source text. It was generated and formatted for the web and using a Python script that I wrote with the assistance of ChatGPT. You can view and clone the script for your own use in its <a class="text-white" href="https://github.com/boruszak/mesostic-poem-generator">GitHub repository</a>.</p>
-        <p>On mobile devices, view this page in "Desktop Mode" for the best experience.</p>
-      </div>
-    </div>
+<div class="prose">
+  <p>This mesostic uses my dissertation as its source text. It was generated and formatted for the web and using a Python script that I wrote with the assistance of ChatGPT. You can view and clone the script for your own use in its <a href="https://github.com/boruszak/mesostic-poem-generator">GitHub repository</a>.</p>
+  <p>On mobile devices, view this page in "Desktop Mode" for the best experience.</p>
+</div>
 
 
 <h3>Reading through Sound Off</h3>
